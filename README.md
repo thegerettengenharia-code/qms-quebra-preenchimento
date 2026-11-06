@@ -118,6 +118,8 @@ O `vercel.json` já configura cabeçalhos de cache para `sw.js`, `manifest.json`
 - Exportação validada com `openpyxl`: **32 mesclagens idênticas**, estilos, bordas, fontes e larguras preservados; datas como data real; itens em maiúsculas; `A INFORMAR` e `SEM PARADAS` corretos; `E92`/`E95` preenchidos.
 - Testes de interface com Playwright (390×844 e 1440×900): fluxo completo das 6 etapas, parciais, pendências, download, persistência, registros, duplicação, exclusão, ajustes, backup/restauração, filtros e exportação pela tela Exportar.
 - **35/35 verificações** de layout e acessibilidade: sem overflow horizontal, alvos de toque ≥ 44 px, sem truncamento e conteúdo livre da navegação fixa.
+- Limites validados: 66 linhas de produção, 8 de refugo e 2 de paradas por máquina, com bloqueio do botão ao atingir o teto.
+- **0 violações WCAG A/AA** no axe-core nas 5 telas.
 - Zero erros de console.
 
 ---

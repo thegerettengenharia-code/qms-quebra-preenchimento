@@ -303,7 +303,7 @@
 
       (dados.producao || []).forEach((linha, indice) => {
         const n = indice + 1;
-        const temAlgo = linha.item || linha.qtde != null || linha.data;
+        const temAlgo = linha.item || linha.qtde != null;
         if (!temAlgo) return;
 
         if (!linha.item) erros.push(`${nome} · produção linha ${n}: informe o item.`);
@@ -316,7 +316,7 @@
 
       (dados.refugo || []).forEach((linha, indice) => {
         const n = indice + 1;
-        const temAlgo = linha.item || linha.qtde != null || linha.data;
+        const temAlgo = linha.item || linha.qtde != null;
         if (!temAlgo) return;
 
         if (!linha.item) erros.push(`${nome} · refugo linha ${n}: informe o item.`);
@@ -347,6 +347,9 @@
     const totais = calcularTotais(t);
     if (totais.linhasProducao === 0) {
       alertas.push('Nenhuma linha de produção lançada: a planilha será exportada sem produção.');
+    }
+    if (totais.linhasParadas === 0) {
+      alertas.push('Nenhuma parada registrada. Use “Sem paradas” para declarar que não houve paradas.');
     }
     if (t.caixas == null) alertas.push('Caixas vazias não informadas (célula E92).');
     if (t.aramados == null) alertas.push('Aramados vazios não informados (célula E95).');
@@ -630,7 +633,7 @@
       const linha = lista[indice];
       if (!linha) return;
 
-      const temAlgo = linha.item || linha.qtde != null || linha.data;
+      const temAlgo = linha.item || linha.qtde != null;
       const marca = (campo, condicao, aviso) => {
         const input = $(`input[data-campo="${campo}"]`, tr);
         if (!input) return;

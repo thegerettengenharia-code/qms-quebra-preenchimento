@@ -2,7 +2,7 @@
    QMS Quebra · Service Worker
    App shell offline + atualização controlada
    ========================================================= */
-const VERSAO = 'qms-quebra-v1.0.0';
+const VERSAO = 'qms-quebra-v1.1.0';
 const CACHE_APP = `${VERSAO}-app`;
 
 const ARQUIVOS = [

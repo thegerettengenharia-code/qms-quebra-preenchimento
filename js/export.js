@@ -101,7 +101,10 @@
   }
 
   function preencherProducao(ws, bloco, linhas) {
-    (linhas || []).slice(0, 66).forEach((linha, indice) => {
+    (linhas || [])
+      .filter((linha) => linha && (linha.item || linha.qtde != null))
+      .slice(0, 66)
+      .forEach((linha, indice) => {
       const row = bloco.linhaInicial + indice;
       const [cData, cItem, cQtde, cFusao, cParcial] = bloco.colunas;
 
@@ -114,7 +117,10 @@
   }
 
   function preencherRefugo(ws, bloco, linhas) {
-    (linhas || []).slice(0, 8).forEach((linha, indice) => {
+    (linhas || [])
+      .filter((linha) => linha && (linha.item || linha.qtde != null))
+      .slice(0, 8)
+      .forEach((linha, indice) => {
       const row = bloco.linhaInicial + indice;
       const [cData, cItem, cQtde, cFusao, cMotivo] = bloco.colunas;
 
@@ -132,7 +138,10 @@
   }
 
   function preencherParadas(ws, bloco, linhas) {
-    (linhas || []).slice(0, 2).forEach((linha, indice) => {
+    (linhas || [])
+      .filter((linha) => linha && (linha.parada || linha.tempo != null || linha.motivo))
+      .slice(0, 2)
+      .forEach((linha, indice) => {
       const row = bloco.linhaInicial + indice;
       const [cParada, cTempo, cMotivo] = bloco.colunas;
 
