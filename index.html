@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#06284f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="QMS Quebra">
+  <meta name="description" content="Gestão do turno de produção da Quebra de Canais e Jato — Fundição. Preenchimento guiado e exportação na planilha oficial QMS.">
+  <title>QMS Quebra · Gestão de Turno</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icone-192.png">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- ============ Sprite de ícones (SVG, sem emojis) ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.12.6.63 1.03 1.24 1.03H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51.97Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11L4 12"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V9l6 4V9l6 4V5h6v16Z"/><path d="M7 17h2M12 17h2M17 17h2"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01"/></symbol>
+  </svg>
+
+  <div id="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- ============ Modal de confirmação ============ -->
+  <div id="modal" class="modal oculta" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-texto">
+    <div class="modal-conteudo">
+      <h3 id="modal-titulo">Confirmar</h3>
+      <p id="modal-texto"></p>
+      <div class="modal-acoes">
+        <button type="button" class="btn btn-secundario" id="modal-cancelar">Cancelar</button>
+        <button type="button" class="btn btn-perigo" id="modal-confirmar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Barra de instalação PWA ============ -->
+  <div id="barra-instalacao" class="barra-instalacao oculta" role="region" aria-label="Instalar aplicativo">
+    <div class="barra-instalacao-conteudo">
+      <p>Instale o <strong>QMS Quebra</strong> para abrir direto da tela inicial e funcionar sem internet.</p>
+      <button type="button" class="btn btn-cta btn-pequeno" id="btn-instalar">Instalar</button>
+      <button type="button" class="btn btn-secundario btn-pequeno" id="btn-fechar-instalacao" aria-label="Agora não">Agora não</button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       TELA · INÍCIO
+       ================================================================ -->
+  <section id="tela-inicio" class="tela oculta" data-tela="inicio">
+    <header class="app-bar">
+      <div class="brand">
+        <img src="img/logo.png" alt="Logo QMS Quebra" class="logo" width="46" height="46">
+        <div class="brand-text">
+          <h1>QMS Quebra</h1>
+          <p class="subtitulo">Quebra de Canais e Jato</p>
+        </div>
+      </div>
+      <span class="status-salvo" id="status-inicio">Salvo</span>
+    </header>
+
+    <main class="conteudo">
+      <div class="hero">
+        <p class="hero-eyebrow">Produção diária · Fundição</p>
+        <h2 class="hero-title">Gestão do turno inteiro</h2>
+        <p class="hero-counter">Estamos há <strong id="hero-dias">0</strong> dias sem Acidentes na Quebra de Canais e Jato no <span id="hero-turno">2º Turno</span></p>
+        <p class="hero-sub" id="hero-data">Nenhum turno em andamento</p>
+      </div>
+
+      <div class="kpis" aria-label="Indicadores do turno em andamento">
+        <div class="kpi destaque">
+          <span class="kpi-label">Peças produzidas</span>
+          <strong id="kpi-pecas">0</strong>
+          <small id="kpi-pecas-sub">0 lançamentos</small>
+        </div>
+        <div class="kpi perigo">
+          <span class="kpi-label">Refugo</span>
+          <strong id="kpi-refugo">0</strong>
+          <small id="kpi-refugo-sub">0,0% da produção</small>
+        </div>
+        <div class="kpi alerta">
+          <span class="kpi-label">Paradas</span>
+          <strong id="kpi-paradas">0</strong>
+          <small id="kpi-paradas-sub">min registrados</small>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Pendências</span>
+          <strong id="kpi-pendencias">0</strong>
+          <small id="kpi-pendencias-sub">tudo em ordem</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2><svg aria-hidden="true"><use href="#i-clock"></use></svg> Turno em andamento</h2>
+          <span class="badge" id="badge-turno">Não iniciado</span>
+        </div>
+        <div class="turno-status" id="resumo-turno-inicio">
+          <div><span class="rotulo">Data</span><strong id="inicio-data">—</strong></div>
+          <div><span class="rotulo">Turno</span><strong id="inicio-turno">—</strong></div>
+          <div><span class="rotulo">Responsável</span><strong id="inicio-responsavel">—</strong></div>
+          <div><span class="rotulo">Última alteração</span><strong id="inicio-atualizado">—</strong></div>
+        </div>
+        <div class="acoes-tabela">
+          <button type="button" class="btn btn-cta" data-ir="preencher">
+            <svg aria-hidden="true"><use href="#i-edit"></use></svg> Continuar preenchimento
+          </button>
+          <button type="button" class="btn btn-secundario" id="btn-novo-turno-inicio">
+            <svg aria-hidden="true"><use href="#i-plus"></use></svg> Novo turno
+          </button>
+        </div>
+      </div>
+
+      <nav class="menu-principal" aria-label="Ações principais">
+        <button type="button" class="btn btn-primario btn-largo" data-ir="preencher">
+          <svg aria-hidden="true"><use href="#i-edit"></use></svg> Preencher turno
+        </button>
+        <button type="button" class="btn btn-secundario btn-largo" data-ir="registros">
+          <svg aria-hidden="true"><use href="#i-list"></use></svg> Registros
+        </button>
+        <button type="button" class="btn btn-secundario btn-largo" data-ir="exportar">
+          <svg aria-hidden="true"><use href="#i-download"></use></svg> Exportar planilha
+        </button>
+        <button type="button" class="btn btn-terciario btn-largo" data-ir="ajustes">
+          <svg aria-hidden="true"><use href="#i-settings"></use></svg> Ajustes
+        </button>
+      </nav>
+
+      <p class="versao">QMS Quebra · v1.0 · dados salvos no aparelho</p>
+    </main>
+  </section>
+
+  <!-- ================================================================
+       TELA · PREENCHER
+       ================================================================ -->
+  <section id="tela-preencher" class="tela oculta" data-tela="preencher">
+    <header class="app-bar compact">
+      <button type="button" class="btn-voltar" data-ir="inicio" aria-label="Voltar ao início">
+        <svg aria-hidden="true"><use href="#i-left"></use></svg>
+      </button>
+      <div class="brand-text">
+        <h1>Preencher turno</h1>
+        <p class="subtitulo" id="preencher-subtitulo">Etapa 1 de 6 · Identificação</p>
+      </div>
+      <span class="status-salvo" id="status-preencher">Salvo</span>
+    </header>
+
+    <div class="passos" id="passos" role="tablist" aria-label="Etapas do preenchimento">
+      <button type="button" class="passo ativo" role="tab" aria-selected="true" data-etapa="1"><span class="num">1</span> Turno</button>
+      <button type="button" class="passo" role="tab" aria-selected="false" data-etapa="2"><span class="num">2</span> Produção</button>
+      <button type="button" class="passo" role="tab" aria-selected="false" data-etapa="3"><span class="num">3</span> Refugo</button>
+      <button type="button" class="passo" role="tab" aria-selected="false" data-etapa="4"><span class="num">4</span> Paradas</button>
+      <button type="button" class="passo" role="tab" aria-selected="false" data-etapa="5"><span class="num">5</span> Acabamento</button>
+      <button type="button" class="passo" role="tab" aria-selected="false" data-etapa="6"><span class="num">6</span> Revisão</button>
+    </div>
+
+    <main class="conteudo">
+      <!-- ETAPA 1 -->
+      <div class="painel ativo" data-painel="1" role="tabpanel" aria-label="Identificação do turno">
+        <div class="card">
+          <h2><svg aria-hidden="true"><use href="#i-factory"></use></svg> Identificação do turno</h2>
+          <div class="campos-grade">
+            <div class="campo">
+              <label for="inp-data">Data do turno *</label>
+              <input type="date" id="inp-data" required>
+            </div>
+            <div class="campo">
+              <label for="inp-turno">Turno</label>
+              <select id="inp-turno">
+                <option value="1º TURNO">1º Turno</option>
+                <option value="2º TURNO" selected>2º Turno</option>
+                <option value="3º TURNO">3º Turno</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="inp-responsavel">Responsável pelo preenchimento</label>
+              <input type="text" id="inp-responsavel" placeholder="Nome e matrícula" autocomplete="name" maxlength="60">
+            </div>
+            <div class="campo">
+              <label for="inp-dias">Dias sem acidentes *</label>
+              <input type="number" id="inp-dias" min="0" step="1" inputmode="numeric" placeholder="Ex.: 12">
+            </div>
+          </div>
+          <p class="ajuda" style="margin-top:12px">O contador de dias sem acidentes substitui o <strong>?</strong> da célula A2 da planilha oficial.</p>
+        </div>
+
+        <div class="card">
+          <h2><svg aria-hidden="true"><use href="#i-info"></use></svg> Como funciona</h2>
+          <p class="ajuda">O preenchimento é dividido em 6 etapas. Tudo é salvo automaticamente no aparelho conforme você digita — pode fechar o app e continuar depois.</p>
+          <p class="ajuda">Ao final, a planilha <strong>Itens Quebra de Canal_2º Turno-WGerett.xlsx</strong> é gerada com o mesmo layout, mesclagens, cores e bordas do modelo oficial.</p>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-ir="inicio">Voltar</button>
+          <button type="button" class="btn btn-primario" data-proxima="2">Avançar para produção <svg aria-hidden="true"><use href="#i-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 2 -->
+      <div class="painel" data-painel="2" role="tabpanel" aria-label="Produção">
+        <div class="card">
+          <div class="card-head">
+            <h2><svg aria-hidden="true"><use href="#i-factory"></use></svg> Produção por máquina</h2>
+            <span class="badge" id="badge-total-producao">0 peças</span>
+          </div>
+          <div class="maquinas-tabs" id="tabs-producao" role="tablist" aria-label="Máquinas"></div>
+          <div class="tabela-wrapper">
+            <table class="tabela-entrada">
+              <thead>
+                <tr>
+                  <th style="width:42px">#</th>
+                  <th style="min-width:130px">Data</th>
+                  <th style="min-width:160px">Item</th>
+                  <th style="width:110px">Qtde de peças</th>
+                  <th style="min-width:130px">Data fusão</th>
+                  <th style="width:100px">Parcial</th>
+                  <th class="col-acoes"><span class="sr-only">Ações</span></th>
+                </tr>
+              </thead>
+              <tbody id="corpo-producao"></tbody>
+            </table>
+          </div>
+          <p class="vazio oculta" id="vazio-producao"><strong>Nenhum lançamento nesta máquina</strong>Adicione a primeira linha de produção.</p>
+          <div class="acoes-tabela">
+            <button type="button" class="btn btn-terciario" id="btn-add-producao">
+              <svg aria-hidden="true"><use href="#i-plus"></use></svg> Adicionar linha
+            </button>
+            <button type="button" class="btn btn-secundario" id="btn-calcular-parciais">
+              <svg aria-hidden="true"><use href="#i-calc"></use></svg> Calcular parciais
+            </button>
+          </div>
+          <p class="ajuda" style="margin-top:10px">Limite de <strong>66 linhas</strong> por máquina (linhas 5 a 70 da planilha). A coluna <strong>Parcial</strong> pode ser preenchida à mão ou calculada pela soma acumulada do mesmo item.</p>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-anterior="1">Voltar</button>
+          <button type="button" class="btn btn-primario" data-proxima="3">Ir para refugo <svg aria-hidden="true"><use href="#i-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 3 -->
+      <div class="painel" data-painel="3" role="tabpanel" aria-label="Refugo">
+        <div class="card">
+          <div class="card-head">
+            <h2><svg aria-hidden="true"><use href="#i-alert"></use></svg> Refugo por máquina</h2>
+            <span class="badge" id="badge-total-refugo">0 peças</span>
+          </div>
+          <div class="maquinas-tabs" id="tabs-refugo" role="tablist" aria-label="Máquinas"></div>
+          <div class="tabela-wrapper">
+            <table class="tabela-entrada">
+              <thead>
+                <tr>
+                  <th style="width:42px">#</th>
+                  <th style="min-width:130px">Data</th>
+                  <th style="min-width:160px">Item</th>
+                  <th style="width:110px">Qtde de peças</th>
+                  <th style="min-width:130px">Data fusão</th>
+                  <th style="min-width:180px">Motivo *</th>
+                  <th class="col-acoes"><span class="sr-only">Ações</span></th>
+                </tr>
+              </thead>
+              <tbody id="corpo-refugo"></tbody>
+            </table>
+          </div>
+          <p class="vazio oculta" id="vazio-refugo"><strong>Nenhum refugo nesta máquina</strong>Se não houve refugo, deixe em branco e siga adiante.</p>
+          <div class="acoes-tabela">
+            <button type="button" class="btn btn-terciario" id="btn-add-refugo">
+              <svg aria-hidden="true"><use href="#i-plus"></use></svg> Adicionar refugo
+            </button>
+          </div>
+          <p class="ajuda" style="margin-top:10px">Limite de <strong>8 linhas</strong> por máquina (linhas 73 a 80). O motivo é obrigatório: se ficar em branco, será exportado como <strong>A INFORMAR</strong> e listado nas pendências.</p>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-anterior="2">Voltar</button>
+          <button type="button" class="btn btn-primario" data-proxima="4">Ir para paradas <svg aria-hidden="true"><use href="#i-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 4 -->
+      <div class="painel" data-painel="4" role="tabpanel" aria-label="Paradas">
+        <div class="card">
+          <div class="card-head">
+            <h2><svg aria-hidden="true"><use href="#i-clock"></use></svg> Paradas por máquina</h2>
+            <span class="badge" id="badge-total-paradas">0 min</span>
+          </div>
+          <div class="maquinas-tabs" id="tabs-paradas" role="tablist" aria-label="Máquinas"></div>
+          <div class="tabela-wrapper">
+            <table class="tabela-entrada">
+              <thead>
+                <tr>
+                  <th style="min-width:190px">Parada</th>
+                  <th style="width:130px">Tempo (min)</th>
+                  <th style="min-width:190px">Motivo</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-paradas"></tbody>
+            </table>
+          </div>
+          <div class="acoes-tabela">
+            <button type="button" class="btn btn-secundario" id="btn-sem-paradas">
+              <svg aria-hidden="true"><use href="#i-check"></use></svg> Sem paradas neste turno
+            </button>
+            <button type="button" class="btn btn-terciario" id="btn-limpar-paradas">Limpar</button>
+          </div>
+          <p class="ajuda" style="margin-top:10px">São <strong>2 linhas</strong> por máquina (linhas 82 e 83). Use <strong>Sem paradas</strong> para registrar “SEM PARADAS” em todas as máquinas.</p>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-anterior="3">Voltar</button>
+          <button type="button" class="btn btn-primario" data-proxima="5">Ir para acabamento <svg aria-hidden="true"><use href="#i-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 5 -->
+      <div class="painel" data-painel="5" role="tabpanel" aria-label="Acabamento">
+        <div class="card">
+          <h2><svg aria-hidden="true"><use href="#i-box"></use></svg> Caixas e aramados</h2>
+          <div class="campos-grade">
+            <div class="campo">
+              <label for="inp-caixas">Caixas vazias</label>
+              <input type="number" id="inp-caixas" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="campo">
+              <label for="inp-aramados">Aramados vazios</label>
+              <input type="number" id="inp-aramados" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+          </div>
+          <p class="ajuda" style="margin-top:12px">Caixas vazias vão para a célula <strong>E92</strong> e aramados vazios para <strong>E95</strong> da planilha.</p>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-anterior="4">Voltar</button>
+          <button type="button" class="btn btn-primario" data-proxima="6">Revisar turno <svg aria-hidden="true"><use href="#i-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 6 -->
+      <div class="painel" data-painel="6" role="tabpanel" aria-label="Revisão">
+        <div class="card">
+          <div class="card-head">
+            <h2><svg aria-hidden="true"><use href="#i-check"></use></svg> Revisão do turno</h2>
+            <span class="badge" id="badge-revisao">—</span>
+          </div>
+          <div class="resumo-linhas" id="resumo-maquinas"></div>
+        </div>
+
+        <div class="card">
+          <h2><svg aria-hidden="true"><use href="#i-alert"></use></svg> Pendências</h2>
+          <ul class="pendencias" id="lista-pendencias"></ul>
+        </div>
+
+        <div class="card">
+          <h2><svg aria-hidden="true"><use href="#i-shield"></use></svg> Fechamento</h2>
+          <p class="ajuda">Confira os totais e as pendências. A exportação gera o arquivo oficial preenchido, pronto para envio à Qualidade.</p>
+          <div class="acoes-tabela">
+            <button type="button" class="btn btn-cta" id="btn-exportar-revisao">
+              <svg aria-hidden="true"><use href="#i-download"></use></svg> Exportar planilha
+            </button>
+            <button type="button" class="btn btn-secundario" id="btn-compartilhar-revisao">
+              <svg aria-hidden="true"><use href="#i-share"></use></svg> Compartilhar
+            </button>
+          </div>
+        </div>
+
+        <div class="barra-acoes">
+          <button type="button" class="btn btn-secundario" data-anterior="5">Voltar</button>
+          <button type="button" class="btn btn-primario" data-ir="inicio">Concluir</button>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ================================================================
+       TELA · REGISTROS
+       ================================================================ -->
+  <section id="tela-registros" class="tela oculta" data-tela="registros">
+    <header class="app-bar compact">
+      <button type="button" class="btn-voltar" data-ir="inicio" aria-label="Voltar ao início">
+        <svg aria-hidden="true"><use href="#i-left"></use></svg>
+      </button>
+      <div class="brand-text">
+        <h1>Registros</h1>
+        <p class="subtitulo">Turnos salvos neste aparelho</p>
+      </div>
+      <span class="status-salvo" id="status-registros">Salvo</span>
+    </header>
+
+    <main class="conteudo">
+      <div class="card">
+        <div class="filtros">
+          <div class="campo">
+            <label for="filtro-busca">Buscar</label>
+            <input type="search" id="filtro-busca" placeholder="Data, turno ou responsável">
+          </div>
+          <div class="campo">
+            <label for="filtro-periodo">Período</label>
+            <select id="filtro-periodo">
+              <option value="todos">Todos</option>
+              <option value="7">Últimos 7 dias</option>
+              <option value="30">Últimos 30 dias</option>
+              <option value="90">Últimos 90 dias</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2><svg aria-hidden="true"><use href="#i-list"></use></svg> Turnos</h2>
+          <span class="badge" id="badge-registros">0</span>
+        </div>
+        <div class="tabela-wrapper">
+          <table class="tabela-registros">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Turno</th>
+                <th>Responsável</th>
+                <th class="num">Peças</th>
+                <th class="num">Refugo</th>
+                <th>Atualizado</th>
+                <th class="acoes">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-registros"></tbody>
+          </table>
+        </div>
+        <p class="vazio oculta" id="vazio-registros"><strong>Nenhum turno encontrado</strong>Comece um novo turno na tela de preenchimento.</p>
+      </div>
+    </main>
+  </section>
+
+  <!-- ================================================================
+       TELA · EXPORTAR
+       ================================================================ -->
+  <section id="tela-exportar" class="tela oculta" data-tela="exportar">
+    <header class="app-bar compact">
+      <button type="button" class="btn-voltar" data-ir="inicio" aria-label="Voltar ao início">
+        <svg aria-hidden="true"><use href="#i-left"></use></svg>
+      </button>
+      <div class="brand-text">
+        <h1>Exportar</h1>
+        <p class="subtitulo">Planilha oficial QMS</p>
+      </div>
+      <span class="status-salvo" id="status-exportar">Salvo</span>
+    </header>
+
+    <main class="conteudo">
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-download"></use></svg> Gerar planilha</h2>
+        <div class="campo">
+          <label for="sel-turno-exportar">Turno</label>
+          <select id="sel-turno-exportar"></select>
+        </div>
+        <div class="resumo-linhas" id="resumo-exportar" style="margin-top:14px"></div>
+        <div class="acoes-exportar">
+          <button type="button" class="btn btn-cta" id="btn-exportar">
+            <svg aria-hidden="true"><use href="#i-download"></use></svg> Baixar .xlsx preenchido
+          </button>
+          <button type="button" class="btn btn-primario" id="btn-compartilhar">
+            <svg aria-hidden="true"><use href="#i-share"></use></svg> Compartilhar planilha
+          </button>
+        </div>
+        <div class="dica" id="dica-exportar">O arquivo mantém o nome, as mesclagens, as cores, as bordas e as fórmulas do modelo oficial.</div>
+      </div>
+
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-shield"></use></svg> Backup e restauração</h2>
+        <p class="ajuda">Salve uma cópia de todos os turnos em um arquivo JSON. Use para trocar de aparelho ou evitar perda de dados.</p>
+        <div class="acoes-exportar">
+          <button type="button" class="btn btn-secundario" id="btn-backup">
+            <svg aria-hidden="true"><use href="#i-download"></use></svg> Baixar backup (.json)
+          </button>
+          <button type="button" class="btn btn-secundario" id="btn-restaurar">
+            <svg aria-hidden="true"><use href="#i-upload"></use></svg> Restaurar backup
+          </button>
+          <input type="file" id="arquivo-restauracao" accept="application/json,.json" class="oculta">
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-info"></use></svg> Como enviar à Qualidade</h2>
+        <p class="ajuda">1. Selecione o turno e baixe o arquivo <strong>.xlsx</strong>.</p>
+        <p class="ajuda">2. Confira as pendências indicadas antes de enviar.</p>
+        <p class="ajuda">3. No celular, use <strong>Compartilhar</strong> para enviar direto pelo Teams, e-mail ou WhatsApp.</p>
+      </div>
+    </main>
+  </section>
+
+  <!-- ================================================================
+       TELA · AJUSTES
+       ================================================================ -->
+  <section id="tela-ajustes" class="tela oculta" data-tela="ajustes">
+    <header class="app-bar compact">
+      <button type="button" class="btn-voltar" data-ir="inicio" aria-label="Voltar ao início">
+        <svg aria-hidden="true"><use href="#i-left"></use></svg>
+      </button>
+      <div class="brand-text">
+        <h1>Ajustes</h1>
+        <p class="subtitulo">Preferências e dados</p>
+      </div>
+      <span class="status-salvo" id="status-ajustes">Salvo</span>
+    </header>
+
+    <main class="conteudo">
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-edit"></use></svg> Padrões de preenchimento</h2>
+        <div class="campos-grade">
+          <div class="campo">
+            <label for="aj-responsavel">Responsável padrão</label>
+            <input type="text" id="aj-responsavel" maxlength="60" placeholder="Nome e matrícula">
+          </div>
+          <div class="campo">
+            <label for="aj-dias">Dias sem acidentes padrão</label>
+            <input type="number" id="aj-dias" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+        <div class="acoes-tabela">
+          <button type="button" class="btn btn-primario" id="btn-salvar-ajustes">
+            <svg aria-hidden="true"><use href="#i-save"></use></svg> Salvar preferências
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-box"></use></svg> Aplicativo</h2>
+        <div class="acoes-tabela">
+          <button type="button" class="btn btn-secundario" id="btn-instalar-ajustes">
+            <svg aria-hidden="true"><use href="#i-download"></use></svg> Instalar na tela inicial
+          </button>
+          <button type="button" class="btn btn-secundario" id="btn-atualizar-app">
+            <svg aria-hidden="true"><use href="#i-refresh"></use></svg> Atualizar aplicativo
+          </button>
+        </div>
+        <p class="ajuda" style="margin-top:10px">Versão 1.0 · funciona offline após a instalação.</p>
+      </div>
+
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-trash"></use></svg> Dados no aparelho</h2>
+        <p class="ajuda" id="aj-info-dados">Nenhum turno salvo.</p>
+        <div class="acoes-tabela">
+          <button type="button" class="btn btn-perigo" id="btn-apagar-tudo">
+            <svg aria-hidden="true"><use href="#i-trash"></use></svg> Apagar todos os turnos
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><svg aria-hidden="true"><use href="#i-info"></use></svg> Sobre</h2>
+        <p class="ajuda"><strong>QMS Quebra</strong> — gestão do turno de produção da Quebra de Canais e Jato, Fundição.</p>
+        <p class="ajuda">Modelo oficial: <strong>Itens Quebra de Canal_2º Turno-WGerett.xlsx</strong> · Produção Diária QMS.</p>
+        <p class="ajuda">Os dados ficam apenas neste aparelho (IndexedDB). Nada é enviado para servidores.</p>
+      </div>
+    </main>
+  </section>
+
+  <!-- ============ Navegação inferior ============ -->
+  <nav class="navegacao-inferior" aria-label="Navegação principal">
+    <a href="#/inicio" class="nav-item" data-nav="inicio">
+      <svg aria-hidden="true"><use href="#i-home"></use></svg><span>Início</span>
+    </a>
+    <a href="#/preencher" class="nav-item" data-nav="preencher">
+      <svg aria-hidden="true"><use href="#i-edit"></use></svg><span>Preencher</span>
+    </a>
+    <a href="#/registros" class="nav-item" data-nav="registros">
+      <svg aria-hidden="true"><use href="#i-list"></use></svg><span>Registros</span>
+    </a>
+    <a href="#/exportar" class="nav-item" data-nav="exportar">
+      <svg aria-hidden="true"><use href="#i-download"></use></svg><span>Exportar</span>
+    </a>
+    <a href="#/ajustes" class="nav-item" data-nav="ajustes">
+      <svg aria-hidden="true"><use href="#i-settings"></use></svg><span>Ajustes</span>
+    </a>
+  </nav>
+
+  <noscript>
+    <div class="conteudo"><div class="card"><p class="ajuda">Este aplicativo precisa de JavaScript habilitado para funcionar.</p></div></div>
+  </noscript>
+
+  <script src="js/utils.js" defer></script>
+  <script src="js/db.js" defer></script>
+  <script src="js/modelo.js" defer></script>
+  <script src="js/export.js" defer></script>
+  <script src="js/share.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

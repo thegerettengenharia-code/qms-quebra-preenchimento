@@ -1,0 +1,49 @@
+{
+  "name": "QMS Quebra · Gestão de Turno",
+  "short_name": "QMS Quebra",
+  "description": "Gestão do turno de produção da Quebra de Canais e Jato — Fundição. Preenchimento guiado e exportação na planilha oficial QMS.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./#/inicio",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#eef2f7",
+  "theme_color": "#06284f",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "img/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Preencher turno",
+      "short_name": "Preencher",
+      "url": "./#/preencher",
+      "icons": [{ "src": "img/icone-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Exportar planilha",
+      "short_name": "Exportar",
+      "url": "./#/exportar",
+      "icons": [{ "src": "img/icone-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
